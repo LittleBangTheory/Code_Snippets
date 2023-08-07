@@ -1,0 +1,40 @@
+#!/usr/bin/expect
+# Script pour changer le mot de passe d'un utilisateur dans un Opengear via SSH
+# Usage : "./oob_password.exp $ip $username $password $port $targetUsername $newTargetPassword"
+
+# Timeout de 60 secondes pour la connexion SSH
+set timeout 60
+
+# Connexion SSH à l'Opengear
+spawn ssh -p [lindex $argv 3] [lindex $argv 1]@[lindex $argv 0]
+
+# Attend le champ password: ou Password:
+expect "*?assword: " {
+        send "[lindex $argv 2]\r"
+        }
+
+# Attend le prompt de l'Opengear
+expect ":~# " {
+        send "config\r"
+        }
+expect ": " {
+        send "user\r"
+        }
+expect ": " {
+        send "[lindex $argv 4]\r"
+        }
+expect ": " {
+        send "password [lindex $argv 5]\r"
+        }
+expect ": " {
+        send "apply all\r"
+        }
+expect ": " {
+        send "exit\r"
+        }
+expect ":~# " {
+        send "exit\r"
+        }
+
+# Attend la fin de la déconnexion SSH
+interact
