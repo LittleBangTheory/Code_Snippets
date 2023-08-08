@@ -1,0 +1,14 @@
+int myStrlen(char*);
+char* myStrcpy(char*, char*);
+void affichageHexa(char*);
+void affichageDec(char*);
+char* mettreEnMaj(char*);
+char* mettreEnMin(char*);
+char* inverserMinMaj(char*);
+char* retournerMot(char*);
+int rechercheCaractereG(char*, char);
+int rechercheCaractereD(char*, char);
+int estPalindrome(char*);
+int comparerChaine(char*, char*);
+int valeurDecimale(char*);
+void intVersChaine(int, char*);
