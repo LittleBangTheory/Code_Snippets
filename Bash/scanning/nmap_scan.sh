@@ -33,24 +33,24 @@ then
 fi
 
 # launch nmap -sn $1/$2 and store the results in a file
-echo "Starting ping sweep scan"
+echo "[+] Starting ping sweep scan"
 nmap -sn $1/$2 > scan.txt
-echo "Scan completed\r\n\r\n"
+echo "[+] Scan completed\r\n\r\n"
 
 # Parse the file to get the IP addresses
-echo "Parsing the results"
+echo "[+] Parsing the results"
 cat scan.txt | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" > ip.txt
-echo "Parsing completed, $(wc -l ip.txt | cut -d' ' -f1) IPs identified :\r\n"
+echo "[+] Parsing completed, $(wc -l ip.txt | cut -d' ' -f1) IPs identified :\r\n"
 
 # Display the IP addresses
 while read ip
 do
-    echo $ip
+    echo "\t$ip"
 done < ip.txt
 echo "\r\n\r\n"
 
 # Launch a complete scan for each IP address and store the results in a file for each IP address
-echo "Starting thorough scan"
+echo "[+] Starting thorough scan"
 # If the directory $1 doesn't exist, create it
 if [ ! -d "$1" ]
 then
@@ -63,19 +63,19 @@ nb_ip=$(wc -l ip.txt | cut -d ' ' -f1)
 # For each IP address, launch a complete scan and store the results in a file
 while read ip
 do
-    echo "Scanning $ip"
+    echo "\t[+] Scanning $ip"
     nmap -sV -O $ip > ./$1/$ip.txt
 
     # Get current percentage using nb_ip and the number of files in ip_files/
     percentage=$((100 * $(ls $1/*.txt | wc -l) / $nb_ip))
-    echo "Scan completed, $percentage% done\r\n";
+    echo "\t[+] Scan completed, $percentage% done\r\n";
 done < ip.txt
-echo "Thorough scan completed\r\n\r\n"
+echo "[+] Thorough scan completed\r\n\r\n"
 
 # Delete the temporary files
-echo "Deleting temporary files"
+echo "[+] Deleting temporary files"
 rm scan.txt
 rm ip.txt
-echo "Temporary files deleted"
+echo "[+] Temporary files deleted"
 
 # End of the script
