@@ -1,4 +1,4 @@
-`users_management.sh` crée des utilisateurs respectant les règles UNIX suivantes :
+`users_management.sh` crée des utilisateurs à partir de noms dans un CSV en respectant les règles UNIX suivantes :
 
 - Il est interdit de réutiliser des uid lors de la création de compte.
 - A la création du compte, un mot de passe aléatoire composé d’au moins 10 caractères (majuscule,minuscule, chiffre) dont au moins 1 caractère spécial (& ;,…) est généré et fourni à l’utilisateur. Ce mot de passe doit être changé lors de la première connexion.
